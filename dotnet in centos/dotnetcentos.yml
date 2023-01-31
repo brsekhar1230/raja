@@ -9,4 +9,4 @@
     ansible.builtin.yum:
      name: dotnet-sdk-{{ dotnet_version }}
      update_cache: yes
-     state: present 
+     state: true 
