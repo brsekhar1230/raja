@@ -1,0 +1,12 @@
+---
+- name: install dotnet
+  hosts: all
+  become: yes
+  vars:
+   dotnet_version: "2.2"
+  tasks:
+  - name: install dotnet
+    ansible.builtin.yum:
+     name: dotnet-sdk-{{ dotnet_version }}
+     update_cache: yes
+     state: present 
