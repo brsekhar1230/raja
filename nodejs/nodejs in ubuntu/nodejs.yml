@@ -1,0 +1,10 @@
+---
+- name: install nodejs versions
+  hosts: all
+  become: yes
+  tasks:
+  - name: install nodejs
+    apt:
+     name: nodejs
+     update_cache: yes
+     state: present  
