@@ -1,0 +1,75 @@
+
+---
+- name: install jboss wildfly on ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: java installation
+      ansible.builtin.apt:
+       name: openjdk-11-jdk
+       update_cache: yes
+       state: present
+    - name: download wildfly-16.0.0.Final
+      ansible.builtin.get_url:
+       url: https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.tar.gz
+       dest: /opt
+    - name: extract file wildfly-16.0.0.Final.tar.gz
+      ansible.builtin.unarchive:
+       src: /opt/wildfly-16.0.0.Final.tar.gz
+       dest: /opt
+       remote_src: yes
+    - name: copy file from wildfly-16.0.0.Final
+      ansible.builtin.copy:
+       src: /opt/wildfly-16.0.0.Final/
+       dest: /opt/wildfly
+       remote_src: yes
+    - name: ensure group
+      ansible.builtin.group:
+       name: wildfly
+       state: present
+    - name: create user
+      ansible.builtin.user:
+       name: raja
+       create_home: yes
+       group: wildfly 
+       home: /opt/wildfly
+       shell: /sbin/nologin
+       state: present
+    - name: changing ownership
+      ansible.builtin.file:
+       path: /opt/wildfly
+       owner: raja
+       group: wildfly
+       mode: "1777"
+    - name: create a directory
+      ansible.builtin.file:
+       path: /etc/wildfly
+       state: directory
+    - name: copy configuration files
+      ansible.builtin.copy:
+       src: /opt/wildfly/docs/contrib/scripts/systemd/wildfly.conf
+       dest: /etc/wildfly/
+       remote_src: yes
+    - name: copy launch.sh
+      ansible.builtin.copy:
+       src: /opt/wildfly/docs/contrib/scripts/systemd/launch.sh 
+       dest: /opt/wildfly/bin/
+       remote_src: yes
+    - name: changing ownership
+      ansible.builtin.file:
+       path: /opt/wildfly/bin/launch.sh
+       owner: raja
+       group: wildfly
+    - name: copy wildfly.service
+      src: cp /opt/wildfly/docs/contrib/scripts/systemd/wildfly.service 
+      dest: /etc/systemd/system/
+      remote_src: yes
+    - name: restart service 
+      ansible.builtin.systemd:
+       state: restarted
+       daemon_reload: yes
+       enabled: yes
+       name: wildfly.service
+       
+      
+      
