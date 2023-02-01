@@ -1,0 +1,6 @@
+---
+- name: install postgressql
+  hosts: all
+  roles:
+   - role: galaxyproject.postgresql
+     become: yes
