@@ -53,6 +53,7 @@
         dest: /etc/systemd/system/tomcat.service
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
+        remote_src: yes
     - name: reload daemon and start tomcat
       ansible.builtin.systemd:
         name: "{{ tomcat_service_name }}"
