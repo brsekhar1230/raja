@@ -1,2 +1,10 @@
----
-# tasks file for roleraja
+- name: install https
+  ansible.builtin.apt:
+   name: apt-transport-https
+   state: present
+- name: install dotnetcore
+  ansible.builtin.apt:
+   name: dotnet-sdk-{{ dotnet_version }}
+   update_cache: yes
+   state: present
+
