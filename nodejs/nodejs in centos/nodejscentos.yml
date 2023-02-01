@@ -8,5 +8,4 @@
    - name: install nodejs
      yum:
       name: nodejs
-      update_cache: yes
       state: present
