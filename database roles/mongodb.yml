@@ -1,0 +1,6 @@
+---
+- name: install mongodb
+  hosts: all
+  roles:
+   - role: pgkehle.mongodb
+     become: yes
