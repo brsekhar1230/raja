@@ -1,2 +1,1 @@
----
-# vars file for roleraja
+dotnet_version: "6.0"
