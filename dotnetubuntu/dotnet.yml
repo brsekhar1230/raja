@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    dotnet_version: "3.0"
+    dotnet_version: "6.0"
   tasks:
   - name: install https
     ansible.builtin.apt:
