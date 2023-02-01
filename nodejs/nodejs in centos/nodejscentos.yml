@@ -2,11 +2,11 @@
 - name: install nodejs on centos
   hosts: all
   become: yes
-  vars:
-   version: "16"
   tasks:
+   - name: command shell
+     ansible.builtin.shell: "curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -"
    - name: install nodejs
      yum:
-      name: nodejs{{ version }}
+      name: nodejs
       update_cache: yes
       state: present
