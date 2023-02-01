@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-   version: "16"
+   version: "10"
   tasks:
    - name: install nodejs
      yum:
