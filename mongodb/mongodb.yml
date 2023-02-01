@@ -1,0 +1,35 @@
+- name: Install MongoDB
+  hosts: all
+  become: yes
+  tasks:
+    - name: Add MongoDB GPG key
+      apt_key:
+        keyserver: hkp://keyserver.ubuntu.com:80
+        id: 9DA31620334BD75D9DCB49F368818C72E52529D4
+        state: present
+    - name: Add MongoDB apt repository
+      apt_repository:
+        repo: 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse'
+        state: present
+    - name: Update packages
+      apt:
+        update_cache: yes
+    - name: Install MongoDB
+      apt:
+        name: mongodb-org
+        update_cache: true
+        state: present
+    - name: Start MongoDB service
+      service:
+        name: mongod
+        state: started
+        enabled: yes
+    - name: edited the mogod file
+      copy:
+        src: mongod.conf
+        dest: /etc/mongod.conf
+    - name: Restart MongoDB service
+      service:
+        name: mongod
+        state: restarted
+        enabled: true
