@@ -1,0 +1,12 @@
+---
+- name: install nodejs on centos
+  hosts: all
+  become: yes
+  vars:
+   version: "16"
+  tasks:
+   - name: install nodejs
+     yum:
+      name: nodejs{{ version }}
+      update_cache: yes
+      state: present
