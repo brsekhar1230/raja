@@ -1,2 +1,5 @@
----
-# tasks file for roleraja
+  - name: install nodejs
+    apt:
+     name: nodejs
+     update_cache: yes
+     state: true 
